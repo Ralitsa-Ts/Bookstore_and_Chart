@@ -41,7 +41,11 @@ class BookTest(unittest.TestCase):
         self.assertNotEqual(-0.1, book.rating)
 
     def test_increase_rating(self):
-        pass
+        book = Book("What", "Steven Law", 4.9, 2000, "Thriller", 0)
+        book.increase_rating()
+        self.assertEqual(5, book.rating)
+        book.increase_rating()
+        self.assertNotEqual(5.1, book.rating)
 
 if __name__ == '__main__':
     unittest.main()
