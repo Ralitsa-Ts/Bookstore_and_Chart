@@ -84,7 +84,7 @@ class Book:
             will return corespondingly 0 or 5
         """
         if self._rating >= 0 and self._rating <= 5:
-            return self.rating
+            return self._rating
         elif self._rating < 0:
             return 0
         else:

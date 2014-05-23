@@ -1,33 +1,44 @@
 from book import Book
 import unittest
 
-BOOK_INFORMATION = ("Birds", "John White", 3.3, 2001, "Fantasy", 5)
-BOOK_INFORMATION1 = ("Birds", "John white", 3.3, 2011, "Fantasy", 0)
-BOOK_INFORMATION2 = ("Domino", "Peter Clark", 2, 2000, "Thriller", 3)
-
 
 class BookTest(unittest.TestCase):
     def test_book_equals(self):
-        self.assertEqual(Book(*BOOK_INFORMATION), Book(*BOOK_INFORMATION))
-        self.assertNotEqual(Book(*BOOK_INFORMATION), Book(*BOOK_INFORMATION1))
+        book1 = Book("Birds", "John White", 3.3, 2001, "Fantasy", 15)
+        book2 = Book("Birds", "John Black", 3.3, 2001, "Fantasy", 15)
+        book3 = Book("Birds", "John White", 4.3, 2001, "Fantasy", 1)
+        self.assertEqual(book1, book1)
+        self.assertEqual(book1, book3)
+        self.assertNotEqual(book1, book2)
 
     def test_is_available(self):
-        self.assertFalse(Book(*BOOK_INFORMATION1).is_available())
-        self.assertTrue(Book(*BOOK_INFORMATION2).is_available())
+        book1 = Book("Lords", "Steven Moore", 2, 2000, "Thriller", 0)
+        book2 = Book("Lords", "Steven Moore", 2, 2000, "Thriller", 10)
+        self.assertFalse(book1.is_available())
+        self.assertTrue(book2.is_available())
 
     def test_decrease_number_of_copies(self):
-        book = Book(*BOOK_INFORMATION)
+        book = Book("Lords", "Steven Moore", 2, 2000, "Thriller", 15)
         book.decrease_number_of_copies(10)
+        self.assertEqual(5, book.number_of_copies)
+        book.decrease_number_of_copies(6)
+        self.assertNotEqual(-1, book.number_of_copies)
         self.assertEqual(0, book.number_of_copies)
 
     def test_increase_number_of_copies(self):
-        book = Book(*BOOK_INFORMATION1)
-        new_number_of_copies = book.number_of_copies + 10
+        book = Book("Lords", "Steven Moore", 2, 2000, "Thriller", 0)
         book.increase_number_of_copies(10)
-        self.assertEqual(new_number_of_copies, book.number_of_copies)
+        self.assertEqual(10, book.number_of_copies)
+        book.increase_number_of_copies(5)
+        self.assertNotEqual(10, book.number_of_copies)
+        self.assertEqual(15, book.number_of_copies)
 
     def test_decrease_rating(self):
-        pass
+        book = Book("What", "Steven Law", 0.1, 2000, "Thriller", 0)
+        book.decrease_rating()
+        self.assertEqual(0, book.rating)
+        book.decrease_rating()
+        self.assertNotEqual(-0.1, book.rating)
 
     def test_increase_rating(self):
         pass
