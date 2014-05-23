@@ -1,3 +1,7 @@
+"""
+    This module ensures that the important functions of class Book from
+    the module book work as expected
+"""
 from book import Book
 import unittest
 
