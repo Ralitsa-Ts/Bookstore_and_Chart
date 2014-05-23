@@ -9,7 +9,7 @@ class Book:
         This class provides us with the opportunity to create objects
         that represent different books.
     """
-    def __init__(self, title, author, rating, year, genre, copies):
+    def __init__(self, title, author, year, genre, rating, copies):
         """
             Setting the basic information about the book.
             Keyword arguments:
@@ -22,10 +22,10 @@ class Book:
         """
         self._title = title
         self._author = author
-        self._rating = rating
-        self._year = year
+        self._year = int(year)
         self._genre = genre
-        self._number_of_copies = copies
+        self._rating = float(rating)
+        self._number_of_copies = int(copies)
 
     def __str__(self):
         """
@@ -47,6 +47,13 @@ class Book:
             return True and self._year == other._year
         else:
             return False and self._year == other._year
+
+    def __ne__(self, other):
+        """
+            Check if two books are not the same by comparing their title,
+            author and year of publication
+        """
+        return not self.__eq__(other)
 
     @property
     def rating(self):
@@ -142,4 +149,6 @@ class Book:
         """
         return "{}+{}+{}+{}+{}+{}".format(self.title, self.author, self.year,
                                           self.genre, self.rating,
-                                          self.number_of_copies)
+                                          self.number_of_copies) + "\n"
+
+
