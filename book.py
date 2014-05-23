@@ -28,6 +28,9 @@ class Book:
         self._number_of_copies = copies
 
     def __str__(self):
+        """
+            Get full information about the book.
+        """
         return ("<Book Information>\nTitle:{}\n".format(self.title) +
                 "Author:{}\nPublished in:{}\n".format(self.author, self.year) +
                 "Genre:{}\nRating:{}\n".format(self.genre, self.rating) +
@@ -130,3 +133,13 @@ class Book:
             Increase the rating of the book with 0.1.
         """
         self._rating += 0.1
+
+    def special_record(self):
+        """
+            Returns a special representation of the book's information
+            that may be used as output to a file.The components of the
+            book's information are splitted with '+'
+        """
+        return "{}+{}+{}+{}+{}+{}".format(self.title, self.author, self.year,
+                                          self.genre, self.rating,
+                                          self.number_of_copies)
