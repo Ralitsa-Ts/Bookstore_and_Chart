@@ -15,6 +15,13 @@ class BookTest(unittest.TestCase):
         self.assertEqual(book1, book3)
         self.assertNotEqual(book1, book2)
 
+    def test_book_information(self):
+        book = Book("My war", "Carl Son", 3, 1988, "Mystery", 2)
+        print(book)
+        self.assertEqual("<Book Information>\nTitle:My war\nAuthor:Carl " +
+                         "Son\nPublished in:1988\nGenre:Mystery\n" +
+                         "Rating:3\nNumber of copies:2\n", str(book))
+
     def test_is_available(self):
         book1 = Book("Lords", "Steven Moore", 2, 2000, "Thriller", 0)
         book2 = Book("Lords", "Steven Moore", 2, 2000, "Thriller", 10)
