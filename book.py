@@ -151,4 +151,3 @@ class Book:
                                           self.genre, self.rating,
                                           self.number_of_copies) + "\n"
 
-
