@@ -17,7 +17,6 @@ class BookTest(unittest.TestCase):
 
     def test_book_information(self):
         book = Book("My war", "Carl Son", 3, 1988, "Mystery", 2)
-        print(book)
         self.assertEqual("<Book Information>\nTitle:My war\nAuthor:Carl " +
                          "Son\nPublished in:1988\nGenre:Mystery\n" +
                          "Rating:3\nNumber of copies:2\n", str(book))
@@ -57,6 +56,11 @@ class BookTest(unittest.TestCase):
         self.assertEqual(5, book.rating)
         book.increase_rating()
         self.assertNotEqual(5.1, book.rating)
+
+    def test_special_record(self):
+        book = Book("My war", "Carl Son", 3, 1988, "Mystery", 2)
+        record = book.special_record()
+        self.assertEqual("My war+Carl Son+1988+Mystery+3+2", record)
 
 if __name__ == '__main__':
     unittest.main()
