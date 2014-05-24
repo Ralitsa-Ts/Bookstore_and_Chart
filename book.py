@@ -153,5 +153,7 @@ class Book:
 
     @staticmethod
     def book_by_record(record):
+        """
+            Returns a book that was created after using the special record.
+        """
         return Book(*record.rstrip('\n').split('+'))
-
