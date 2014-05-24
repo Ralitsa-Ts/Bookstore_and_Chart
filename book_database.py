@@ -1,6 +1,8 @@
 """
     This module's main purpose is to modify a file that contains
-    records of books
+    records of books.The records should look as follows :
+    title+author+year+genre+rating+copies_number where year,rating and
+    copies_number are numbers.
 """
 
 from book import Book
@@ -13,8 +15,7 @@ class MissingBook(Exception):
 
 class BookDataBase:
     """
-        This class mainly adds a record of a book to file and removes a
-        record.
+        This class mainly adds/removes a record of a book in a file.
     """
 
     def __init__(self, _file):
@@ -32,9 +33,9 @@ class BookDataBase:
 
     def add_record(self, book):
         """
-            Adds a new record of a book to the file.If there is a book that
-            has the same title,author and year of publication then the book
-            already exist and we only change the number of copies of the
+            Adds a new record of a book to the file.If there is a book record
+            with the same title,author and year of publication then the book
+            is recorded and we only change the number of copies of the
             recorded book.Otherwise, we add the new book.
         """
         with open(self.file, 'r') as file:
