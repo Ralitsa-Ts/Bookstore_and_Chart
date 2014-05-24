@@ -151,3 +151,7 @@ class Book:
                                           self.genre, self.rating,
                                           self.number_of_copies) + "\n"
 
+    @staticmethod
+    def book_by_record(record):
+        return Book(*record.rstrip('\n').split('+'))
+
