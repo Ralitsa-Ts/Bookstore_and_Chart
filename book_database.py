@@ -1,3 +1,8 @@
+"""
+    This module's main purpose is to modify a file that contains
+    records of books
+"""
+
 from book import Book
 import os
 
@@ -7,6 +12,10 @@ class MissingBook(Exception):
 
 
 class BookDataBase:
+    """
+        This class mainly adds a record of a book to file and removes a
+        record.
+    """
 
     def __init__(self, _file):
         self.file = _file
@@ -15,10 +24,19 @@ class BookDataBase:
             f.close()
 
     def booklist(self):
+        """
+            Returns a list of the books that are recorded in the file.
+        """
         with open(self.file, 'r') as file:
             return [Book.book_by_record(book) for book in file.readlines()]
 
-    def writer(self, book):
+    def add_record(self, book):
+        """
+            Adds a new record of a book to the file.If there is a book that
+            has the same title,author and year of publication then the book
+            already exist and we only change the number of copies of the
+            recorded book.Otherwise, we add the new book.
+        """
         with open(self.file, 'r') as file:
             data = file.readlines()
         try:
@@ -38,7 +56,12 @@ class BookDataBase:
             with open(self.file, 'a') as file:
                 file.write(book.special_record())
 
-    def remover(self, book):
+    def remove_record(self, book):
+        """
+            Removes a record of a book that represents the given book.The
+            record represents the given book if the title,author and year
+            of publication match.
+        """
         with open(self.file, 'r') as file:
             books_record = file.readlines()
         books = self.booklist()
