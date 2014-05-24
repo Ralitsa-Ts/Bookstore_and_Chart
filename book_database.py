@@ -1,6 +1,7 @@
 from book import Book
 import os
 
+
 class MissingBook(Exception):
     pass
 
@@ -53,14 +54,3 @@ class BookDataBase:
             os.remove(os.path.realpath(self.file)+".bak")
         else:
             raise MissingBook("No such book")
-
-
-book = Book("What", "Steven Law", 2000, "Thriller", 0.2, 1)
-book1 = Book("Whatttt", "Steven Law", 2000, "Thriller", 0.2, 1)
-book2 = Book("Go", "Steven Law", 2000, "Thriller", 0.2, 1)
-e = BookDataBase("database.txt")
-#e.booklist()
-e.writer(book)
-c = BookDataBase("database.txt")
-c.writer(book)
-#e.remover(Book("Whatttt", "Steven Law", 2000, "Thriller", 0.2, 20))
