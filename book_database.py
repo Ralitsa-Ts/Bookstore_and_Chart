@@ -1,58 +1,66 @@
 from book import Book
+import os
+
+class MissingBook(Exception):
+    pass
+
+
 class BookDataBase:
 
     def __init__(self, _file):
         self.file = _file
-        self.database = list()
+        if not os.path.exists(self.file):
+            f = open(self.file, 'a')
+            f.close()
 
-    def output_information(self, book):
-        f = open(self.file, 'a')
-        #f.write(book.special_record())
-        f.close()
+    def booklist(self):
+        with open(self.file, 'r') as file:
+            return [Book.book_by_record(book) for book in file.readlines()]
 
-    def access_information(self):
-        f = open(self.file, 'r')
-        booklist = list()
-        lines = f.readlines()
-        if lines != []:
-            for line in lines:
-                self.database.append(line)
-                booklist.append(Book(*line.split('+')))
-        f.close()
-        return booklist
-
-    def write_over_line(self, book):
+    def writer(self, book):
+        with open(self.file, 'r') as file:
+            data = file.readlines()
         try:
-            f = open(self.file, 'r+')
-            books = list()
-            lines = f.readlines()
-            if lines != []:
-                for line in lines:
-                    book1 = Book(*line.rstrip('\n').split('+'))
-                    if book != book1:
-                        books.append(book.special_record().rstrip('\n'))
-                    else:
-                        book.increase_number_of_copies(book1.number_of_copies)
-                        books.append(book.special_record().rstrip('\n'))
-                        break
-                f.seek(0)
-                for line in books:
-                    f.write(line)
-            else:
-                f.write(book.special_record().rstrip('\n'))
-            f.close()
-        except FileNotFoundError:
-            f = open(self.file, 'w')
-            f.write(book.special_record().rstrip('\n'))
-            f.close()
+            _file = self.file
+            enum = enumerate(data)
+            I = next(i for i, v in enum if Book.book_by_record(v) == book)
+            os.rename(os.path.realpath(_file), os.path.realpath(_file)+".bak")
+            copies = int(data[I].rstrip('\n').split('+')[-1])
+            book_update = book.special_record().rstrip('\n').split('+')
+            book_update[-1] = str(int(book_update[-1]) + copies)
+            data[I] = '+'.join(book_update) + '\n'
+            with open(_file, 'w') as file:
+                file.writelines(data)
+            os.remove(os.path.realpath(self.file)+".bak")
+        except StopIteration:
+            data.append(book.special_record())
+            with open(self.file, 'a') as file:
+                file.write(book.special_record())
+
+    def remover(self, book):
+        with open(self.file, 'r') as file:
+            books_record = file.readlines()
+        books = self.booklist()
+        if book in books:
+            _file = self.file
+            os.rename(os.path.realpath(_file), os.path.realpath(_file)+".bak")
+            with open(self.file, 'w') as file:
+                counter = 0
+                for _book in books_record:
+                    if book != books[counter]:
+                        file.write(_book)
+                    counter += 1
+            os.remove(os.path.realpath(self.file)+".bak")
+        else:
+            raise MissingBook("No such book")
 
 
-book = Book("What", "Steven Law", 2000, "Thriller", 0.2, 3)
-book1 = Book("What", "Steven Law", 2000, "Thriller", 0.2, 20)
-book2 = Book("Go", "Steven Law", 2000, "Thriller", 0.2, 20)
-print(book.special_record().rstrip('\n'))
+book = Book("What", "Steven Law", 2000, "Thriller", 0.2, 1)
+book1 = Book("Whatttt", "Steven Law", 2000, "Thriller", 0.2, 1)
+book2 = Book("Go", "Steven Law", 2000, "Thriller", 0.2, 1)
 e = BookDataBase("database.txt")
-e.output_information(book)
-e.write_over_line(book1)
-e.write_over_line(book2)
-e.access_information()
+#e.booklist()
+e.writer(book)
+c = BookDataBase("database.txt")
+c.writer(book)
+#e.remover(Book("Whatttt", "Steven Law", 2000, "Thriller", 0.2, 20))
