@@ -23,13 +23,15 @@ class Library:
             self._books[index].increase_number_of_copies(new_copies)
         else:
             self._books.append(book)
-        self.number_of_books += 1
+            self.number_of_books += 1
+            self.genre_dict[book.genre].append(book)
 
     def remove_book(self, book):
         if book in self._books:
             self.database.remove_record(book)
             self._books.remove(book)
             self.number_of_books -= 1
+            self.genre_dict[book.genre].remove(book)
 
     def book_information_by_title(self, title):
         return [book for book in self._books if book.title == title]
