@@ -9,7 +9,10 @@ from book import Book
 import os
 
 
-class MissingBook(Exception):
+class MissingBookError(Exception):
+    """
+        Exception for book that's not recorded in the file.
+    """
     pass
 
 
@@ -77,4 +80,4 @@ class BookDataBase:
                     counter += 1
             os.remove(os.path.realpath(self.file)+".bak")
         else:
-            raise MissingBook("No such book")
+            raise MissingBookError("No such book")
