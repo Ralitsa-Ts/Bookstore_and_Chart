@@ -20,5 +20,5 @@ class Library:
     def number_of_different_books(self):
         pass
 
-    def number_of_books_by genres(self):
+    def number_of_books_by_genres(self):
         pass
