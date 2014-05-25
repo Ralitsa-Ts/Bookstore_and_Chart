@@ -76,7 +76,7 @@ class BookDataBaseTest(unittest.TestCase):
         with open(FILE, 'w') as file:
             file.write("What+Steven Maw+2000+Thriller+0.2+20\n")
             file.write("Go+Steven Law+2000+Thriller+0.2+20\n")
-        with self.assertRaises(MissingBook):
+        with self.assertRaises(MissingBookError):
             database.remove_record(book)
 
 if __name__ == '__main__':
