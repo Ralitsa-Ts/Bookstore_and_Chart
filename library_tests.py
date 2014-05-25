@@ -5,6 +5,7 @@ STORE = "storage.txt"
 
 
 class LibraryTest(unittest.TestCase):
+
     def test_add_book(self):
         possible_genres = ["Fantasy"]
         library = Library(STORE, possible_genres)
@@ -72,10 +73,43 @@ class LibraryTest(unittest.TestCase):
         os.remove(os.path.realpath(STORE))
 
     def test_number_of_different_books(self):
-        pass
+        possible_genres = ["Fantasy", "Thriller"]
+        library = Library(STORE, possible_genres)
+        book = Book("Somewhere", "Steven Law", 2000, "Fantasy", 0.2, 3)
+        book1 = Book("Birds", "John White", 2001, "Thriller", 3.3, 15)
+        book2 = Book("Birds", "Steve Tyler", 2012, "Thriller", 3.5, 10)
+        library.add_book(book)
+        library.add_book(book1)
+        library.add_book(book2)
+        self.assertEqual(3, library.number_of_different_books())
+        library.add_book(book)
+        self.assertEqual(3, library.number_of_different_books())
+        library.remove_book(book1)
+        self.assertEqual(2, library.number_of_different_books())
+        os.remove(os.path.realpath(STORE))
 
     def test_number_of_books_by_genres(self):
-        pass
+        possible_genres = ["Fantasy", "Thriller"]
+        library = Library(STORE, possible_genres)
+        book = Book("Somewhere", "Steven Law", 2000, "Fantasy", 0.2, 3)
+        book1 = Book("Birds", "John White", 2001, "Thriller", 3.3, 15)
+        book2 = Book("Birds", "Steve Tyler", 2012, "Thriller", 3.5, 10)
+        book3 = Book("Spam", "Steve Tyler", 2012, "Thriller", 3.5, 10)
+        library.add_book(book)
+        library.add_book(book1)
+        library.add_book(book2)
+        expected_result = library.number_of_books_by_genres()
+        self.assertEqual({'Fantasy': 1, 'Thriller': 2}, expected_result)
+        library.add_book(book3)
+        expected_result = library.number_of_books_by_genres()
+        self.assertEqual({'Fantasy': 1, 'Thriller': 3}, expected_result)
+        library.remove_book(book1)
+        expected_result = library.number_of_books_by_genres()
+        self.assertEqual({'Fantasy': 1, 'Thriller': 2}, expected_result)
+        library.remove_book(book)
+        expected_result = library.number_of_books_by_genres()
+        self.assertEqual({'Fantasy': 0, 'Thriller': 2}, expected_result)
+        os.remove(os.path.realpath(STORE))
 
     def test_create_genre_dict(self):
         pass
