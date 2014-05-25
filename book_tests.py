@@ -5,7 +5,7 @@
 from book import Book
 import unittest
 
-#title author year genre rating copies
+
 class BookTest(unittest.TestCase):
     def test_book_equals(self):
         book1 = Book("Birds", "John White", 2001, "Fantasy", 3.3, 15)
@@ -64,16 +64,14 @@ class BookTest(unittest.TestCase):
 
     def test_book_repr(self):
         book = Book("My war", "Carl Son", 1988, "Mystery", 3, 2)
-        self.assertEqual("<Book My war by Carl Son published in 1988;genre:"+
-                         "Mystery>", book.__repr__())
+        self.assertEqual("<Book My war by Carl Son published in 1988;genre:" +
+                         "Mystery>", repr(book))
 
-if __name__ == '__main__':
-    unittest.main()
     def test_book_by_record(self):
         book = Book.book_by_record("Fall+Carl Jon+1999+Crime+3+2")
-        print(book)
         self.assertEqual("<Book Information>\nTitle:Fall\nAuthor:Carl " +
                          "Jon\nPublished in:1999\nGenre:Crime\n" +
                          "Rating:3.0\nNumber of copies:2\n", str(book))
 
-
+if __name__ == '__main__':
+    unittest.main()
