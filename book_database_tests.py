@@ -3,7 +3,7 @@
     from the module book_database work as expected.
 """
 
-from book_database import BookDataBase, MissingBookError, Book
+from book_database import Book, BookDataBase, MissingBookError
 import unittest
 import os
 FILE = "test.txt"
