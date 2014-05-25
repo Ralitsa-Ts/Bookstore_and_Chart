@@ -1,5 +1,5 @@
 """
-    This module contains a class named Book which provides
+    This module contains a class named Book,which provides
     storing and manipulating some basic information about a book.
 """
 
