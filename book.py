@@ -36,6 +36,13 @@ class Book:
                 "Genre:{}\nRating:{}\n".format(self.genre, self.rating) +
                 "Number of copies:{}\n".format(self.number_of_copies))
 
+    def __repr__(self):
+        """
+            Representation of a book.
+        """
+        return ("<Book " + self._title + " by " + self._author + " published"
+                " in "+ str(self._year) + ";genre:" + self._genre + ">")
+
     def __eq__(self, other):
         """
             Check if two books are the same by comparing their title,
