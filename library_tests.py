@@ -1,3 +1,7 @@
+"""
+    This module ensures that the important functions of class Library from
+    the module library work as expected.
+"""
 from library import Library, Book
 import unittest
 import os
@@ -98,21 +102,36 @@ class LibraryTest(unittest.TestCase):
         library.add_book(book)
         library.add_book(book1)
         library.add_book(book2)
-        expected_result = library.number_of_books_by_genres()
-        self.assertEqual({'Fantasy': 1, 'Thriller': 2}, expected_result)
+        actual_result = library.number_of_books_by_genres()
+        self.assertEqual({'Fantasy': 1, 'Thriller': 2}, actual_result)
         library.add_book(book3)
-        expected_result = library.number_of_books_by_genres()
-        self.assertEqual({'Fantasy': 1, 'Thriller': 3}, expected_result)
+        actual_result = library.number_of_books_by_genres()
+        self.assertEqual({'Fantasy': 1, 'Thriller': 3}, actual_result)
         library.remove_book(book1)
-        expected_result = library.number_of_books_by_genres()
-        self.assertEqual({'Fantasy': 1, 'Thriller': 2}, expected_result)
+        actual_result = library.number_of_books_by_genres()
+        self.assertEqual({'Fantasy': 1, 'Thriller': 2}, actual_result)
         library.remove_book(book)
-        expected_result = library.number_of_books_by_genres()
-        self.assertEqual({'Fantasy': 0, 'Thriller': 2}, expected_result)
+        actual_result = library.number_of_books_by_genres()
+        self.assertEqual({'Fantasy': 0, 'Thriller': 2}, actual_result)
         os.remove(os.path.realpath(STORE))
 
     def test_create_genre_dict(self):
-        pass
+        possible_genres = ["Fantasy", "Thriller"]
+        library = Library(STORE, possible_genres)
+        book = Book("Somewhere", "Steven Law", 2000, "Fantasy", 0.2, 3)
+        book1 = Book("Birds", "John White", 2001, "Thriller", 3.3, 15)
+        book2 = Book("Birds", "Steve Tyler", 2012, "Thriller", 3.5, 10)
+        book3 = Book("Spam", "Steve Tyler", 2012, "Thriller", 3.5, 10)
+        library.add_book(book)
+        library.add_book(book1)
+        library.add_book(book2)
+        library.create_genre_dict()
+        expected_dict = {"Fantasy": [book], "Thriller": [book1, book2]}
+        self.assertEqual(expected_dict, library.genre_dict)
+        library.add_book(book3)
+        expected_dict["Thriller"].append(book3)
+        self.assertEqual(expected_dict, library.genre_dict)
+        os.remove(os.path.realpath(STORE))
 
 if __name__ == '__main__':
     unittest.main()
