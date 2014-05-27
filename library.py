@@ -91,3 +91,9 @@ class Library:
             books_by_genre = [book for book in books if book.genre == genre]
             sorting = lambda x: x.title
             self.genre_dict[genre] = sorted(books_by_genre, key=sorting)
+
+    def remove_all_data(self):
+        """
+            Removes all records of books in the given storage.
+        """
+        pass
