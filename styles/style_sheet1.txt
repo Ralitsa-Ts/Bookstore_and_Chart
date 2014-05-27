@@ -1,0 +1,26 @@
+QTabBar::tab, QPushButton{
+    background-color: rgb(200, 244, 209);
+    width: 150px;
+    height: 20px;
+    border-width: 1px;
+    border-style: inset;
+    border-color: #535353;
+    border-radius: 15px;
+    margin-left:7px;
+    padding: 6px;
+}
+QLineEdit, QTextEdit, QComboBox{
+    border-width: 1px;
+    background-color : rgb(200, 244, 209);
+    border-style: inset;
+    border-color: #535353;
+    border-radius: 8px;
+}
+QLineEdit
+{
+    height: 22px;
+}
+QToolBar{
+    background-color: rgb(200, 244, 209);
+}
+      
