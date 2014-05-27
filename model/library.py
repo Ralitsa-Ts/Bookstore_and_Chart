@@ -3,7 +3,7 @@
     manipulating a virtual bookstore.
 """
 from book_database import Book, BookDataBase
-
+import re
 
 class Library:
 
@@ -59,13 +59,13 @@ class Library:
         """
             Returns a list of all books with the given title.
         """
-        return [book for book in self._books if book.title == title]
+        return [book for book in self._books if re.search(title, book.title)]
 
     def book_information_by_author(self, author):
         """
             Returns a list of all books with the given author.
         """
-        return [book for book in self._books if book.author == author]
+        return [book for book in self._books if re.search(author, book.author)]
 
     def number_of_different_books(self):
         """
