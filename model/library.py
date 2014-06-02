@@ -5,6 +5,7 @@
 from book_database import Book, BookDataBase
 import re
 
+
 class Library:
 
     def __init__(self, storage, genres):
@@ -97,3 +98,19 @@ class Library:
             Removes all records of books in the given storage.
         """
         pass
+
+    def return_book(self, book):
+        """
+            Returns a copy of the book back to the library.
+        """
+        book.increase_number_of_copies(1)
+        remove_book(book)
+        add_book(book)
+
+    def take_book(self, book):
+        """
+            Takes a copy of the book from the library.
+        """
+        book.decrease_number_of_copies(1)
+        remove_book(book)
+        add_book(book)
