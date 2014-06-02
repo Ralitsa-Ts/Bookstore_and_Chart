@@ -12,8 +12,8 @@ class Library:
         """
             Setting the basic information about the library.
             Keyword arguments:
-                *storage - a file where the book record will be stored
-                *genres - a list of possible genres
+                * storage - a file where the book record will be stored
+                * genres - a list of possible genres
             We also extract all records from the file given and create a list
             of the books and get their amount.
         """
