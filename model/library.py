@@ -99,18 +99,34 @@ class Library:
         """
         pass
 
+    def manipulation(self, book):
+        remove_book(book)
+        add_book(book)
+
     def return_book(self, book):
         """
             Returns a copy of the book back to the library.
         """
         book.increase_number_of_copies(1)
-        remove_book(book)
-        add_book(book)
+        manipulation(book)
 
     def take_book(self, book):
         """
             Takes a copy of the book from the library.
         """
         book.decrease_number_of_copies(1)
-        remove_book(book)
-        add_book(book)
+        manipulation(book)
+
+    def like_book(self, book):
+        """
+            Increases the book's rating.
+        """
+        book.increase_rating()
+        manipulation(book)
+
+    def dislike_book(self, book):
+        """
+            Increases the book's rating.
+        """
+        book.decrease_rating()
+        manipulation(book)
