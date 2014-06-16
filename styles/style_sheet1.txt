@@ -25,9 +25,13 @@ QToolBar{
 }
 QTableView
 { 
-    background-color: rgb(200, 244, 209); 
-    border: none; 
+    background-color: transparent; 
+    border: none;
     border-radius: 10px; 
     padding: 4px 4px; 
     selection-background-color:  rgb(200,226,199);
+}
+QTabBar::tab:selected{
+   background-color: white;
+   border-bottom: 1px solid white;
 }
