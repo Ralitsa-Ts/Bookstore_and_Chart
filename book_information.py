@@ -61,7 +61,7 @@ class BookInformation(QtGui.QWidget):
         elif self.title.isChecked():
             results = Library.book_information_by_title(search)
         else:
-            pass
+            results = Library.book_information_by_title_author(search)
         self.table = QtGui.QTableWidget(len(results), 9, self)
         headers = ("Title", "Author's name", "Published in", "Rating",
                    "Copies", "Genre", "Get", "Return", "Vote")
@@ -70,14 +70,13 @@ class BookInformation(QtGui.QWidget):
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
 
-        widths = [160, 160, 90, 50, 50, 90, 60]
+        widths = [160, 150, 90, 60, 70, 90, 60]
         for col, width in zip(range(7), widths):
             self.table.setColumnWidth(col, width)
 
         self.table.horizontalHeader().setStretchLastSection(True)
         for row in range(len(results)):
             book = results[row]
-            print(book)
             col = 0
             for column in (book.title, book.author, book.year, book.rating,
                            book.number_of_copies, book.genre):
