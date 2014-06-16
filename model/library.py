@@ -8,6 +8,7 @@ from book_database import Book, BookDataBase
 STORAGE = "database.txt"
 GENRES = ["Fantasy", "Drama", "Romance", "Thriller"]
 
+
 class Library:
 
     @staticmethod
@@ -32,7 +33,6 @@ class Library:
         Library.books = Library.database.booklist()
         Library.number_of_books = len(Library.books)
         Library.create_genre_dict()
-
 
     @staticmethod
     def add_book(book):
@@ -75,6 +75,20 @@ class Library:
         """
         return [book for book in Library.books if
                 re.search(author, book.author)]
+
+    @staticmethod
+    def book_information_by_title_author(information):
+        """
+            Returns a list of all books with the given author/title.
+        """
+        information_title = Library.book_information_by_title(information)
+        information_author = Library.book_information_by_author(information)
+        result = list(filter(lambda x: x not in information_author,
+                      information_title))
+        for information in information_author:
+            if information not in result:
+                result.append(information)
+        return result
 
     @staticmethod
     def number_of_different_books():
