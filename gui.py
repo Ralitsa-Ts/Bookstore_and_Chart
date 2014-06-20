@@ -25,6 +25,7 @@ class Main(QtGui.QWidget):
         self.InitUI()
 
     def InitUI(self):
+        Library()
         tab_widget = Tabs()
         vbox = QtGui.QVBoxLayout()
         vbox.addWidget(tab_widget)

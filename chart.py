@@ -1,6 +1,7 @@
 import sys
 import matplotlib.pyplot as plt
 import numpy as np
+import pylab as pl
 sys.path.append("model")
 from library import Library
 from PyQt4 import QtGui, QtCore
@@ -16,20 +17,24 @@ class Navigation(Nav):
 class Window(QtGui.QDialog):
     def __init__(self, parent=None):
         super(Window, self).__init__(parent)
-
-        self.figure = plt.figure(1, facecolor="white")
+        self.figure = plt.figure(1, facecolor="white", figsize=(6, 5))
         self.canvas = Fig(self.figure)
-        self.toolbar = Navigation(self.canvas, self)
+        self.toolbar = Navigation(self.canvas, self, coordinates=False)
         layout = QtGui.QVBoxLayout()
         layout.addWidget(self.toolbar)
         layout.addWidget(self.canvas)
         self.setLayout(layout)
 
     def plot(self):
+        self.figure.clf()
         self.get_data()
         ax = self.figure.add_subplot(1, 1, 1)
         ax.hold(False)
-        ax.plot(self.count, '*-')
+        sorted(self.count)
+        ax.plot(range(len(self.count)), self.count, '*-')
+        pl.xticks(np.arange(len(self.genres)), self.genres, rotation=90)
+        pl.yticks(np.arange(len(self.genres)), range(max(self.count) + 1), rotation=45)
+        plt.tight_layout()
         self.canvas.draw()
 
     def pie(self):
@@ -37,15 +42,17 @@ class Window(QtGui.QDialog):
         self.get_data()
         pie_data = {k: v for k, v in self.data.items() if v != 0}
         count = list(pie_data.values())
-        ax = self.figure.add_subplot(111)
+        ax = self.figure.add_subplot(1, 1, 1)
         labels = pie_data.keys()
-        ax.pie(count, labels=labels, labeldistance=1.2, autopct='%1.1f%%')
+        ax.pie(count, labeldistance=1, autopct='%1.1f%%')
+        plt.legend(labels, loc="best")
+        plt.tight_layout()
         self.canvas.draw()
 
     def get_data(self):
         self.data = Library.number_of_books_by_genres()
-        self.genres = self.data.keys()
-        self.count = list(self.data.values())
+        self.genres = sorted(self.data.keys())
+        self.count = list(self.data[genre] for genre in self. genres)
 
 
 class Chart(QtGui.QWidget):
@@ -73,9 +80,9 @@ class Chart(QtGui.QWidget):
         grid.addLayout(box, 0, 1)
         grid.addWidget(self.figure, 1, 2)
 
-        grid.setColumnStretch(0, 2)
-        grid.setColumnStretch(1, 2)
-        grid.setRowStretch(1, 2)
+        grid.setColumnStretch(0, 5)
+        grid.setColumnStretch(1, 0)
+        grid.setRowStretch(1, 1)
 
         vBoxlayout = QtGui.QVBoxLayout()
         vBoxlayout.addLayout(grid)

@@ -10,16 +10,12 @@ GENRES = os.path.normpath("images/genres.jpg")
 TITLE = os.path.normpath("images/title.jpg")
 YEAR = os.path.normpath("images/year.jpg")
 
-DATABASE = "model/database.txt"
-POSSIBLE_GENRES = ["Fantasy", "Crime", "Thriller", "Romance", "Other"]
-Library = Library(DATABASE, POSSIBLE_GENRES)
 
 class RemoveBook(QtGui.QWidget):
     def __init__(self):
         super(RemoveBook, self).__init__()
-        self.genres = POSSIBLE_GENRES
+        self.genres = Library.genres
         self.InitUI()
-
 
     def InitUI(self):
         self.titleEdit = QtGui.QLineEdit()
@@ -28,9 +24,11 @@ class RemoveBook(QtGui.QWidget):
         self.genre_options = QtGui.QComboBox()
         self.genre_options.addItems(self.genres)
 
-        self.titleEdit.setPlaceholderText("click to add a title")
-        self.authorEdit.setPlaceholderText("click to add the author's name")
-        self.yearEdit.setPlaceholderText("click to add year of publication")
+        edits = [self.titleEdit, self.authorEdit, self.yearEdit]
+        texts = [" a title", " the author's name", " year of publication"]
+
+        for edit, text in zip(edits, texts):
+            edit.setPlaceholderText("click to add" + text)
 
         Remove = QtGui.QPushButton("Remove")
         Remove.clicked.connect(self.removeBook)

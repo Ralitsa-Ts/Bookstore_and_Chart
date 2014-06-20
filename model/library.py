@@ -6,7 +6,7 @@ import re
 
 from book_database import Book, BookDataBase
 STORAGE = "database.txt"
-GENRES = ["Fantasy", "Drama", "Romance", "Thriller"]
+GENRES = ["Fantasy", "Drama", "Romance", "Thriller", "Comedy", "Action", "Children", "fjo", "eieoeoe", "fjfjfj", "eiieei", "ThriIller", "fjffjfjfjfjjfjfjfjfjfjfjffjfjfjfj"]
 
 
 class Library:
