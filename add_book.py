@@ -13,14 +13,10 @@ STYLE = os.path.normpath("images/style.png")
 TITLE = os.path.normpath("images/title.jpg")
 YEAR = os.path.normpath("images/year.jpg")
 
-POSSIBLE_GENRES = ["Fantasy", "Crime", "Thriller", "Romance", "Other"]
-DATABASE = "model/database.txt"
-LIBRARY = Library(DATABASE, POSSIBLE_GENRES)
-
 class AddBook(QtGui.QWidget):
     def __init__(self):
         super(AddBook, self).__init__()
-        self.genres = POSSIBLE_GENRES
+        self.genres = Library.genres
         self.InitUI()
 
     def InitUI(self):
@@ -104,7 +100,7 @@ class AddBook(QtGui.QWidget):
                         self.yearEdit.text(),
                         self.genre_options.currentText(),
                         self.ratingEdit.text(), self.copiesEdit.text())
-        LIBRARY.add_book(new_book)
+        Library.add_book(new_book)
         for gadget in self.gadgets:
             if gadget != self.genre_options:
                 gadget.clear()
