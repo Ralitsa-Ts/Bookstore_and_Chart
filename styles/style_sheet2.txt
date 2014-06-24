@@ -14,6 +14,13 @@ QTabBar::tab:hover, QPushButton:hover{
    border-style: solid;
    border-color: orange;
 }
+QStatusBar::item { 
+   border: 0px;
+}
+QStatusBar QLabel{
+   font-size: 16px; 
+   font-family: Consolas;
+}
 QTabBar::tab:selected{
    background-color: white;
    border-bottom: 1px solid white;

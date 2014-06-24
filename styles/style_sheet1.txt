@@ -21,6 +21,13 @@ QTabBar::tab:hover, QPushButton:hover{
    border-style: solid;
    border-color: #9DC209;
 }
+QStatusBar::item { 
+   border: 0px;
+}
+QStatusBar QLabel{
+   font-size: 16px; 
+   font-family: Consolas;
+}
 QLineEdit
 {
     height: 22px;
