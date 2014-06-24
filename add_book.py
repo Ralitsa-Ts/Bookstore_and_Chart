@@ -4,18 +4,11 @@ sys.path.append("model")
 from library import Library, Book
 from PyQt4 import QtGui, QtCore
 
-AUTHOR = os.path.normpath("images/author.jpg")
-BOOKS = os.path.normpath("images/books.png")
-COPIES = os.path.normpath("images/copies.jpg")
-GENRES = os.path.normpath("images/genres.jpg")
-RATING = os.path.normpath("images/rating.png")
-STYLE = os.path.normpath("images/style.png")
-TITLE = os.path.normpath("images/title.jpg")
-YEAR = os.path.normpath("images/year.jpg")
 
 class AddBook(QtGui.QWidget):
     def __init__(self):
         super(AddBook, self).__init__()
+        self.image_dir = "images/"
         self.genres = Library.genres
         self.InitUI()
 
@@ -62,7 +55,12 @@ class AddBook(QtGui.QWidget):
                            "Use numbers only!",
                            "Choose from the given options!",
                            "Enter a rating from 0 to 5!", "Enter a number!")
-        pixmaps = (TITLE, AUTHOR, YEAR, GENRES, RATING, COPIES)
+
+        pixmaps = ["title.jpg", "author.jpg", "year.jpg", "genres.jpg",
+                   "rating.png", "copies.jpg"]
+
+        for count in range(len(pixmaps)):
+            pixmaps[count] = os.path.normpath(self.image_dir + pixmaps[count])
 
         images_width = 25
         images_height = 24
@@ -78,7 +76,7 @@ class AddBook(QtGui.QWidget):
             form1.addRow("", image)
 
         image = QtGui.QLabel()
-        image.setPixmap(QtGui.QPixmap(BOOKS))
+        image.setPixmap(QtGui.QPixmap(os.path.normpath("images/books.png")))
         image.setFixedWidth(200)
         image.setFixedHeight(200)
 
