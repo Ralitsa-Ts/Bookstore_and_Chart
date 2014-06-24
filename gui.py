@@ -8,16 +8,6 @@ from remove_book import RemoveBook
 from book_information import BookInformation
 from chart import Chart
 
-ABOUT = os.path.normpath("images/about.png")
-BOOK = os.path.normpath("images/book.png")
-BACKGROUND1 = os.path.normpath("images/background1.jpg")
-BACKGROUND2 = os.path.normpath("images/background2.jpg")
-EXIT = os.path.normpath("images/exit.png")
-STYLE = os.path.normpath("images/style.png")
-
-STYLE_SHEET1 = os.path.normpath("styles/style_sheet1.txt")
-STYLE_SHEET2 = os.path.normpath("styles/style_sheet2.txt")
-
 
 class Main(QtGui.QWidget):
     def __init__(self):
@@ -39,12 +29,18 @@ class About(QtGui.QDialog):
         self.setMinimumSize(300, 300)
         self.setMaximumSize(500, 500)
         self.setWindowTitle("About")
-        self.setWindowIcon(QtGui.QIcon(ABOUT))
+        self.setWindowIcon(QtGui.QIcon(os.path.normpath("images/about.png")))
 
 
 class Interface(QtGui.QMainWindow):
     def __init__(self, parent=None):
         super(Interface, self).__init__(parent)
+        self.about = os.path.normpath("images/about.png")
+        self.book = os.path.normpath("images/book.png")
+        self.background1 = os.path.normpath("images/background1.jpg")
+        self.background2 = os.path.normpath("images/background2.jpg")
+        self.exit = os.path.normpath("images/exit.png")
+        self.styles = os.path.normpath("images/style.png")
         self.InitUI()
 
     def InitUI(self):
@@ -52,7 +48,7 @@ class Interface(QtGui.QMainWindow):
         self.setMinimumSize(900, 700)
         self.setMaximumSize(1000, 950)
         self.setWindowTitle('BookStore and Chart')
-        self.setWindowIcon(QtGui.QIcon(BOOK))
+        self.setWindowIcon(QtGui.QIcon(self.book))
         self.center()
 
         self.palette = QtGui.QPalette()
@@ -71,14 +67,14 @@ class Interface(QtGui.QMainWindow):
         self.move(rectangle.topLeft())
 
     def manage_bars(self):
-        self.exitAction = QtGui.QAction(QtGui.QIcon(EXIT), '&Exit', self)
-        self.aboutAction = QtGui.QAction(QtGui.QIcon(ABOUT), '&About', self)
-        self.styleAction = QtGui.QAction(QtGui.QIcon(STYLE), '&Style', self)
+        self.exitAction = QtGui.QAction(QtGui.QIcon(self.exit), '&Exit', self)
+        self.aboutAction = QtGui.QAction(QtGui.QIcon(self.about), '&About', self)
+        self.styleAction = QtGui.QAction(QtGui.QIcon(self.styles), '&Style', self)
 
         actions = [self.exitAction, self.aboutAction, self.styleAction]
         shortcuts = ['Ctrl+Q', 'Ctrl+A', 'Ctrl+S']
         tips = ['Exit application', 'About application', 'Change style']
-        connections = [QtGui.qApp.quit, self.about, self.change_style]
+        connections = [QtGui.qApp.quit, self.about_app, self.change_style]
         self.create_actions(actions, shortcuts, tips, connections)
 
     def create_actions(self, actions, shortcuts, tips, connections):
@@ -107,22 +103,22 @@ class Interface(QtGui.QMainWindow):
         else:
             event.ignore()
 
-    def about(self):
+    def about_app(self):
         self.inf = About(self)
         self.inf.show()
 
     def style_sheet1(self):
-        with open(STYLE_SHEET1, "r") as style1:
-            self.setStyleSheet(style1.read())
+        with open(os.path.normpath("styles/style_sheet1.txt"), "r") as style:
+            self.setStyleSheet(style.read())
         self.palette.setBrush(QtGui.QPalette.Background,
-                              QtGui.QBrush(QtGui.QPixmap(BACKGROUND2)))
+                              QtGui.QBrush(QtGui.QPixmap(self.background2)))
         self.setPalette(self.palette)
 
     def style_sheet2(self):
-        with open(STYLE_SHEET2, "r") as style2:
-            self.setStyleSheet(style2.read())
+        with open(os.path.normpath("styles/style_sheet2.txt"), "r") as style:
+            self.setStyleSheet(style.read())
         self.palette.setBrush(QtGui.QPalette.Background,
-                              QtGui.QBrush(QtGui.QPixmap(BACKGROUND1)))
+                              QtGui.QBrush(QtGui.QPixmap(self.background1)))
         self.setPalette(self.palette)
 
     def change_style(self):
