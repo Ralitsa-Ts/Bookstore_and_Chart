@@ -24,8 +24,14 @@ class Book:
         self._author = author
         self._year = int(year)
         self._genre = genre
-        self._rating = float("%.2f" % float(rating))
-        self._number_of_copies = int(copies)
+        if rating == "":
+            self._rating = 0
+        else:
+            self._rating = float("%.2f" % float(rating))
+        if copies == "":
+            self._number_of_copies = 1
+        else:
+            self._number_of_copies = int(copies)
 
     def __str__(self):
         """

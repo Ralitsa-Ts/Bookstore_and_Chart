@@ -100,7 +100,7 @@ class BookInformation(QtGui.QWidget):
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
 
-        widths = [140, 140, 90, 80, 70, 60, 50, 60, 50, 60]
+        widths = [150, 150, 90, 80, 70, 60, 50, 60, 50, 70]
         for col, width in zip(range(9), widths):
             self.table.setColumnWidth(col, width)
 

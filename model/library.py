@@ -35,6 +35,10 @@ class Library:
         Library.create_genre_dict()
 
     @staticmethod
+    def genre_list():
+        return Library.genres
+
+    @staticmethod
     def add_book(book):
         """
             Add a new book to the library.If it already exists then the number

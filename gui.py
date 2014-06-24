@@ -8,7 +8,7 @@ from remove_book import RemoveBook
 from book_information import BookInformation
 from chart import Chart
 
-
+  
 class Main(QtGui.QWidget):
     def __init__(self):
         super(Main, self).__init__()
@@ -23,6 +23,9 @@ class Main(QtGui.QWidget):
 
 
 class About(QtGui.QDialog):
+    """
+        Sets the About window
+    """
     def __init__(self, parent):
         super(About, self).__init__(parent)
         self.resize(300, 300)
@@ -44,8 +47,8 @@ class Interface(QtGui.QMainWindow):
         self.InitUI()
 
     def InitUI(self):
-        self.resize(900, 700)
-        self.setMinimumSize(900, 700)
+        self.resize(950, 800)
+        self.setMinimumSize(950, 800)
         self.setMaximumSize(1000, 950)
         self.setWindowTitle('BookStore and Chart')
         self.setWindowIcon(QtGui.QIcon(self.book))
@@ -68,8 +71,10 @@ class Interface(QtGui.QMainWindow):
 
     def manage_bars(self):
         self.exitAction = QtGui.QAction(QtGui.QIcon(self.exit), '&Exit', self)
-        self.aboutAction = QtGui.QAction(QtGui.QIcon(self.about), '&About', self)
-        self.styleAction = QtGui.QAction(QtGui.QIcon(self.styles), '&Style', self)
+        self.aboutAction = QtGui.QAction(QtGui.QIcon(self.about), '&About',
+                                         self)
+        self.styleAction = QtGui.QAction(QtGui.QIcon(self.styles), '&Style',
+                                         self)
 
         actions = [self.exitAction, self.aboutAction, self.styleAction]
         shortcuts = ['Ctrl+Q', 'Ctrl+A', 'Ctrl+S']

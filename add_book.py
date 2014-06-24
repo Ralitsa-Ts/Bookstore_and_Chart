@@ -3,6 +3,7 @@ import os
 sys.path.append("model")
 from library import Library, Book
 from PyQt4 import QtGui, QtCore
+from book_validations import Validations
 
 
 class AddBook(QtGui.QWidget):
@@ -37,8 +38,8 @@ class AddBook(QtGui.QWidget):
         Add.clicked.connect(self.addBook)
         self.gadgets.append(Add)
         form = QtGui.QFormLayout()
-        texts = ("Title*:", "Author*:", "Published in*:", "Genre:", "Rating:",
-                 "Copies:", " ")
+        texts = ("Title*:", "Author*:", "Published in*:", "Genre*:",
+                 "Rating:", "Copies:", " ")
         for text, gadget in zip(texts, self.gadgets):
             form.addRow(text, gadget)
         self.gadgets.remove(Add)
@@ -80,10 +81,17 @@ class AddBook(QtGui.QWidget):
         image.setFixedWidth(200)
         image.setFixedHeight(200)
 
+        window = QtGui.QMainWindow()
+        self.statusBar = QtGui.QStatusBar()
+        self.label = QtGui.QLabel()
+        self.statusBar.addWidget(self.label)
+        window.setStatusBar(self.statusBar)
+
         grid = QtGui.QGridLayout()
         grid.addLayout(form, 0, 0)
         grid.addLayout(form1, 0, 1)
         grid.addWidget(image, 0, 2)
+        grid.addWidget(window, 1, 0)
         grid.setSpacing(10)
         grid.setColumnStretch(0, 5)
         grid.setColumnStretch(1, 2)
@@ -94,11 +102,18 @@ class AddBook(QtGui.QWidget):
         self.setLayout(vBoxlayout)
 
     def addBook(self):
-        #new_book = Book(self.titleEdit.text(), self.authorEdit.text(),
-        #                self.yearEdit.text(),
-        #                self.genre_options.currentText(),
-        #                self.ratingEdit.text(), self.copiesEdit.text())
-        #Library.add_book(new_book)
+        data = [self.titleEdit.text(), self.authorEdit.text(),
+                self.yearEdit.text(), self.genre_options.currentText(),
+                self.ratingEdit.text(), self.copiesEdit.text()]
+        invalid_data = Validations.check_all(*data)
+        if invalid_data == []:
+            new_book = Book(*data)
+            Library.add_book(new_book)
+            self.label.setText('You added the book successfully!')
+        else:
+            message = "Unsuccessful addition!Invalid:\n"
+            message += '\n'.join(invalid_data)
+            self.label.setText(message)
         for gadget in self.gadgets:
             if gadget != self.genre_options:
                 gadget.clear()
