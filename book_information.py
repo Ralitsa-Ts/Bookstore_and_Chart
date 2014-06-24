@@ -4,7 +4,6 @@ sys.path.append("model")
 from library import Library, Book
 from PyQt4 import QtGui, QtCore
 from functools import partial
-FOLDER = os.path.normpath("images/folder.jpg")
 
 
 class BookInformation(QtGui.QWidget):
@@ -35,7 +34,7 @@ class BookInformation(QtGui.QWidget):
         manage.setColumnStretch(3, 1)
 
         image = QtGui.QLabel()
-        image.setPixmap(QtGui.QPixmap(FOLDER))
+        image.setPixmap(QtGui.QPixmap(os.path.normpath("images/folder.jpg")))
         image.setFixedWidth(200)
         image.setFixedHeight(200)
 
@@ -55,34 +54,34 @@ class BookInformation(QtGui.QWidget):
 
     def generate_book_by_row(self, row):
         record = ""
-        for i in range(5):
+        for i in range(6):
             data = self.table.item(row, i).text()
             record += ("+" + data)
-        print(record[1:])
+        return Book.book_by_record(record[1:])
 
     def get_a_copy(self, row):
-        value = int(self.table.item(row, 4).text()) - 1
+        value = int(self.table.item(row, 5).text()) - 1
         if value >= 0:
             item = QtGui.QTableWidgetItem(str(value))
-            self.table.setItem(row, 4, item)
+            self.table.setItem(row, 5, item)
 
     def return_a_copy(self, row):
         self.generate_book_by_row(row)
-        value = int(self.table.item(row, 4).text()) + 1
+        value = int(self.table.item(row, 5).text()) + 1
+        item = QtGui.QTableWidgetItem(str(value))
+        self.table.setItem(row, 5, item)
+
+    def like_a_book(self, row):
+        Library.like_book(self.generate_book_by_row(row))
+        value = "%.2f" % (float(self.table.item(row, 4).text()) + 0.1)
         item = QtGui.QTableWidgetItem(str(value))
         self.table.setItem(row, 4, item)
 
-    def like_a_book(self, row):
-        #Library.like_book()
-        value = "%.2f" % (float(self.table.item(row, 3).text()) + 0.1)
-        item = QtGui.QTableWidgetItem(str(value))
-        self.table.setItem(row, 3, item)
-
     def dislike_a_book(self, row):
-        #Library.dislike_book()
-        value = "%.2f" % (float(self.table.item(row, 3).text()) - 0.1)
+        Library.dislike_book(self.generate_book_by_row(row))
+        value = "%.2f" % (float(self.table.item(row, 4).text()) - 0.1)
         item = QtGui.QTableWidgetItem(str(value))
-        self.table.setItem(row, 3, item)
+        self.table.setItem(row, 4, item)
 
     def update_table(self):
         self.table.setRowCount(0)
@@ -95,14 +94,14 @@ class BookInformation(QtGui.QWidget):
         else:
             results = Library.book_information_by_title_author(search)
         self.table = QtGui.QTableWidget(len(results), 10, self)
-        headers = ("Title", "Author's name", "Published in", "Rating",
-                   "Copies", "Genre", "Get", "Return", "Like"," Dislike")
+        headers = ("Title", "Author's name", "Published in", "Genre",
+                   "Rating", "Copies", "Get", "Return", "Like", " Dislike")
         self.table.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.table.setHorizontalHeaderLabels(headers)
         self.table.resizeColumnsToContents()
         self.table.resizeRowsToContents()
 
-        widths = [140, 140, 90, 60, 70, 80, 50, 60, 50, 60]
+        widths = [140, 140, 90, 80, 70, 60, 50, 60, 50, 60]
         for col, width in zip(range(9), widths):
             self.table.setColumnWidth(col, width)
 
@@ -110,8 +109,8 @@ class BookInformation(QtGui.QWidget):
         for row in range(len(results)):
             book = results[row]
             col = 0
-            for column in (book.title, book.author, book.year, book.rating,
-                           book.number_of_copies, book.genre):
+            for column in (book.title, book.author, book.year, book.genre,
+                           book.rating, book.number_of_copies):
                 item = QtGui.QTableWidgetItem(str(column))
                 self.table.setItem(row, col, item)
                 col += 1
