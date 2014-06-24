@@ -5,9 +5,6 @@
 import re
 
 from book_database import Book, BookDataBase
-STORAGE = "database.txt"
-GENRES = ["Fantasy", "Drama", "Romance", "Thriller", "Comedy", "Action", "Children", "fjo", "eieoeoe", "fjfjfj", "eiieei", "ThriIller", "fjffjfjfjfjjfjfjfjfjfjfjffjfjfjfj"]
-
 
 class Library:
 
@@ -22,11 +19,14 @@ class Library:
             of the books and get their amount.
         """
         if storage is None:
-            Library.storage = STORAGE
+            Library.storage = "database.txt"
         else:
             Library.storage = storage
         if genres is None:
-            Library.genres = GENRES
+            Library.genres = ["Fantasy", "Drama", "Romance", "Thriller",
+                              "Comedy", "Mystery", "Science", "Art", "Math",
+                              "Action", "Children", "Poetry", "Travel",
+                              "Horror", "Comics", "Dictionaries", "Fantasy"]
         else:
             Library.genres = genres
         Library.database = BookDataBase(Library.storage)
@@ -120,16 +120,9 @@ class Library:
             Library.genre_dict[genre] = sorted(books_by_genre, key=sorting)
 
     @staticmethod
-    def remove_all_data():
-        """
-            Removes all records of books in the given storage.
-        """
-        pass
-
-    @staticmethod
     def manipulation(book):
-        remove_book(book)
-        add_book(book)
+        Library.remove_book(book)
+        Library.add_book(book)
 
     @staticmethod
     def return_book(book):
@@ -137,7 +130,8 @@ class Library:
             Returns a copy of the book back to the library.
         """
         book.increase_number_of_copies(1)
-        manipulation(book)
+        Library.manipulation(book)
+        return book
 
     @staticmethod
     def take_book(book):
@@ -145,7 +139,8 @@ class Library:
             Takes a copy of the book from the library.
         """
         book.decrease_number_of_copies(1)
-        manipulation(book)
+        Library.manipulation(book)
+        return book
 
     @staticmethod
     def like_book(book):
@@ -153,7 +148,8 @@ class Library:
             Increases the book's rating.
         """
         book.increase_rating()
-        manipulation(book)
+        Library.manipulation(book)
+        return book
 
     @staticmethod
     def dislike_book(book):
@@ -161,4 +157,5 @@ class Library:
             Decreases the book's rating.
         """
         book.decrease_rating()
-        manipulation(book)
+        Library.manipulation(book)
+        return book

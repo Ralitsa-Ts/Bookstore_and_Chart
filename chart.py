@@ -25,7 +25,7 @@ class Window(QtGui.QDialog):
         layout.addWidget(self.canvas)
         self.setLayout(layout)
 
-    def plot(self):
+    def line_chart(self):
         self.figure.clf()
         self.get_data()
         ax = self.figure.add_subplot(1, 1, 1)
@@ -33,7 +33,8 @@ class Window(QtGui.QDialog):
         sorted(self.count)
         ax.plot(range(len(self.count)), self.count, '*-')
         pl.xticks(np.arange(len(self.genres)), self.genres, rotation=90)
-        pl.yticks(np.arange(len(self.genres)), range(max(self.count) + 1), rotation=45)
+        pl.yticks(np.arange(len(self.genres)), range(max(self.count) + 1),
+                  rotation=45)
         plt.tight_layout()
         self.canvas.draw()
 
@@ -92,4 +93,4 @@ class Chart(QtGui.QWidget):
         if self.pie_chart.isChecked():
             self.figure.pie()
         else:
-            self.figure.plot()
+            self.figure.line_chart()

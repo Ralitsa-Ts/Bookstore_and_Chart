@@ -16,6 +16,11 @@ QLineEdit, QTextEdit, QComboBox{
     border-color: #535353;
     border-radius: 8px;
 }
+QTabBar::tab:hover, QPushButton:hover{
+   border-width: 1px;
+   border-style: solid;
+   border-color: #9DC209;
+}
 QLineEdit
 {
     height: 22px;

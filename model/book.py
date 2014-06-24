@@ -24,7 +24,7 @@ class Book:
         self._author = author
         self._year = int(year)
         self._genre = genre
-        self._rating = float(rating)
+        self._rating = float("%.2f" % float(rating))
         self._number_of_copies = int(copies)
 
     def __str__(self):

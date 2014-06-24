@@ -94,11 +94,11 @@ class AddBook(QtGui.QWidget):
         self.setLayout(vBoxlayout)
 
     def addBook(self):
-        new_book = Book(self.titleEdit.text(), self.authorEdit.text(),
-                        self.yearEdit.text(),
-                        self.genre_options.currentText(),
-                        self.ratingEdit.text(), self.copiesEdit.text())
-        Library.add_book(new_book)
+        #new_book = Book(self.titleEdit.text(), self.authorEdit.text(),
+        #                self.yearEdit.text(),
+        #                self.genre_options.currentText(),
+        #                self.ratingEdit.text(), self.copiesEdit.text())
+        #Library.add_book(new_book)
         for gadget in self.gadgets:
             if gadget != self.genre_options:
                 gadget.clear()

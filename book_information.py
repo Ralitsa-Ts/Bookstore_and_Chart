@@ -60,26 +60,25 @@ class BookInformation(QtGui.QWidget):
         return Book.book_by_record(record[1:])
 
     def get_a_copy(self, row):
-        value = int(self.table.item(row, 5).text()) - 1
-        if value >= 0:
-            item = QtGui.QTableWidgetItem(str(value))
+        if int(self.table.item(row, 5).text()) > 0:
+            book = Library.take_book(self.generate_book_by_row(row))
+            item = QtGui.QTableWidgetItem(str(book.number_of_copies))
             self.table.setItem(row, 5, item)
 
     def return_a_copy(self, row):
-        self.generate_book_by_row(row)
-        value = int(self.table.item(row, 5).text()) + 1
-        item = QtGui.QTableWidgetItem(str(value))
+        book = Library.return_book(self.generate_book_by_row(row))
+        item = QtGui.QTableWidgetItem(str(book.number_of_copies))
         self.table.setItem(row, 5, item)
 
     def like_a_book(self, row):
-        Library.like_book(self.generate_book_by_row(row))
-        value = "%.2f" % (float(self.table.item(row, 4).text()) + 0.1)
+        book = Library.like_book(self.generate_book_by_row(row))
+        value = "%.2f" % book.rating
         item = QtGui.QTableWidgetItem(str(value))
         self.table.setItem(row, 4, item)
 
     def dislike_a_book(self, row):
-        Library.dislike_book(self.generate_book_by_row(row))
-        value = "%.2f" % (float(self.table.item(row, 4).text()) - 0.1)
+        book = Library.dislike_book(self.generate_book_by_row(row))
+        value = "%.2f" % book.rating
         item = QtGui.QTableWidgetItem(str(value))
         self.table.setItem(row, 4, item)
 
