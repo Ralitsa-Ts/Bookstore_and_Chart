@@ -43,8 +43,10 @@ The user will have the chance to add a new book and to insert the following data
 As a result some of the information will be processed and some information will be maintained about the 
 number of books and the number of books in a certain genre.
 In addition, it will also be possible to generate a chart illustrating the number of books in each genre.
+
 That way the user will be more aware of the number of books in the different genres and will know what 
-type of books to add.It will be possible to add/remove a book or to gain access to the information about certain books.
+type of books to add.
+It will be possible to add or remove a book or to gain access to the information about certain books.
 ------------------------------------------------------------------------------------
 The application might be useful in a library.
 
