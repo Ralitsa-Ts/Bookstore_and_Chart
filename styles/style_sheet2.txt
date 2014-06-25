@@ -20,6 +20,7 @@ QStatusBar::item {
 QStatusBar QLabel{
    font-size: 16px; 
    font-family: Consolas;
+   color: #FFA500;
 }
 QTabBar::tab:selected{
    background-color: white;

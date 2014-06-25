@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pylab as pl
 sys.path.append("model")
+
 from library import Library
 from PyQt4 import QtGui, QtCore
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as Fig
@@ -26,6 +27,9 @@ class Window(QtGui.QDialog):
         self.setLayout(layout)
 
     def line_chart(self):
+        """
+            Prepare and show the line chart.
+        """
         self.figure.clf()
         self.get_data()
         ax = self.figure.add_subplot(1, 1, 1)
@@ -39,6 +43,9 @@ class Window(QtGui.QDialog):
         self.canvas.draw()
 
     def pie(self):
+        """
+            Prepare and show the pie chart.
+        """
         self.figure.clf()
         self.get_data()
         pie_data = {k: v for k, v in self.data.items() if v != 0}
@@ -51,6 +58,9 @@ class Window(QtGui.QDialog):
         self.canvas.draw()
 
     def get_data(self):
+        """
+            Gain access of the data about the books in the library.
+        """
         self.data = Library.number_of_books_by_genres()
         self.genres = sorted(self.data.keys())
         self.count = list(self.data[genre] for genre in self. genres)
@@ -62,13 +72,24 @@ class Chart(QtGui.QWidget):
         self.InitUI()
 
     def InitUI(self):
+        self.set_buttons_and_slots()
+        self.fill_in_grid()
+
+    def set_buttons_and_slots(self):
+        """
+            Set the main buttons that will ensure access to the charts.
+        """
         self.pie_chart = QtGui.QRadioButton("pie chart")
         self.line_chart = QtGui.QRadioButton("line chart")
         self.generate = QtGui.QPushButton('Generate')
         self.generate.clicked.connect(self.show_data)
         self.generate.setMinimumSize(80, 30)
-
         self.pie_chart.setChecked(True)
+
+    def fill_in_grid(self):
+        """
+            Fill in the gridLayout with all the needed stuff.
+        """
         box = QtGui.QVBoxLayout()
         box.addWidget(self.pie_chart)
         box.addWidget(self.line_chart)
@@ -90,6 +111,9 @@ class Chart(QtGui.QWidget):
         self.setLayout(vBoxlayout)
 
     def show_data(self):
+        """
+            Show the chosen type of chart.
+        """
         if self.pie_chart.isChecked():
             self.figure.pie()
         else:

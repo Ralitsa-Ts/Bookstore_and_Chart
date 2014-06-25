@@ -6,6 +6,7 @@ import re
 
 from book_database import Book, BookDataBase
 
+
 class Library:
 
     @staticmethod
@@ -70,15 +71,18 @@ class Library:
         """
             Returns a list of all books with the given title.
         """
-        return [book for book in Library.books if re.search(title, book.title)]
+        books = [book for book in Library.books if re.search(title.lower(),
+                 book.title.lower())]
+        return sorted(books, key=lambda x: x.title)
 
     @staticmethod
     def book_information_by_author(author):
         """
             Returns a list of all books with the given author.
         """
-        return [book for book in Library.books if
-                re.search(author, book.author)]
+        books = [book for book in Library.books if
+                 re.search(author.lower(), book.author.lower())]
+        return sorted(books, key=lambda x: x.author)
 
     @staticmethod
     def book_information_by_title_author(information):
@@ -92,7 +96,7 @@ class Library:
         for information in information_author:
             if information not in result:
                 result.append(information)
-        return result
+        return sorted(result, key=lambda x: (x.title, x.author))
 
     @staticmethod
     def number_of_different_books():
@@ -125,6 +129,10 @@ class Library:
 
     @staticmethod
     def manipulation(book):
+        """
+            Removes and adds a book back to the library.
+            Useful when you change only the rating or number of copies.
+        """
         Library.remove_book(book)
         Library.add_book(book)
 

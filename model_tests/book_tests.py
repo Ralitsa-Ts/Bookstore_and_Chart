@@ -26,12 +26,6 @@ class BookTest(unittest.TestCase):
                          "Son\nPublished in:1988\nGenre:Mystery\n" +
                          "Rating:3.0\nNumber of copies:2\n", str(book))
 
-    def test_is_available(self):
-        book1 = Book("Lords", "Steven Moore", 2000, "Thriller", 2, 0)
-        book2 = Book("Lords", "Steven Moore", 2000, "Thriller", 2, 10)
-        self.assertFalse(book1.is_available())
-        self.assertTrue(book2.is_available())
-
     def test_decrease_number_of_copies(self):
         book = Book("Lords", "Steven Moore", 2000, "Thriller", 2, 15)
         book.decrease_number_of_copies(10)

@@ -1,6 +1,7 @@
 import sys
 import os
 sys.path.append("model")
+
 from library import Library, Book
 from PyQt4 import QtGui, QtCore
 from add_book import AddBook
@@ -8,8 +9,11 @@ from remove_book import RemoveBook
 from book_information import BookInformation
 from chart import Chart
 
-  
+
 class Main(QtGui.QWidget):
+    """
+        The main widget.Setting the main environment.
+    """
     def __init__(self):
         super(Main, self).__init__()
         self.InitUI()
@@ -32,38 +36,57 @@ class About(QtGui.QDialog):
         self.setMinimumSize(300, 300)
         self.setMaximumSize(500, 500)
         self.setWindowTitle("About")
+        text = QtGui.QLabel("This application gives you the opportunity" +
+                            " to: \n->add a book\n->remove a book\n" +
+                            "->access book's information")
+        vbox = QtGui.QVBoxLayout()
+        vbox.addWidget(text)
+        self.setLayout(vbox)
         self.setWindowIcon(QtGui.QIcon(os.path.normpath("images/about.png")))
 
 
 class Interface(QtGui.QMainWindow):
     def __init__(self, parent=None):
         super(Interface, self).__init__(parent)
+        self.InitUI()
+
+    def load_images_paths(self):
+        """
+            Loads the images that will be used.
+        """
         self.about = os.path.normpath("images/about.png")
         self.book = os.path.normpath("images/book.png")
         self.background1 = os.path.normpath("images/background1.jpg")
         self.background2 = os.path.normpath("images/background2.jpg")
         self.exit = os.path.normpath("images/exit.png")
         self.styles = os.path.normpath("images/style.png")
-        self.InitUI()
 
-    def InitUI(self):
+    def prepare_the_window(self):
+        """
+            Prepares the main window for work.
+        """
         self.resize(950, 800)
         self.setMinimumSize(950, 800)
         self.setMaximumSize(1000, 950)
         self.setWindowTitle('BookStore and Chart')
         self.setWindowIcon(QtGui.QIcon(self.book))
         self.center()
-
         self.palette = QtGui.QPalette()
         self.style = False
         self.change_style()
 
+    def InitUI(self):
+        self.load_images_paths()
+        self.prepare_the_window()
         self.manage_bars()
         central_widget = Main()
         self.setCentralWidget(central_widget)
         self.show()
 
     def center(self):
+        """
+            Centers the window in the middle of the desktop.
+        """
         rectangle = self.frameGeometry()
         center_point = QtGui.QDesktopWidget().availableGeometry().center()
         rectangle.moveCenter(center_point)
@@ -98,6 +121,9 @@ class Interface(QtGui.QMainWindow):
             self.toolbar.addAction(action)
 
     def closeEvent(self, event):
+        """
+            Closes the application.
+        """
         reply = QtGui.QMessageBox.question(self, 'Quit', "Are you sure you " +
                                            "want to quit?",
                                            QtGui.QMessageBox.Yes |
@@ -109,10 +135,16 @@ class Interface(QtGui.QMainWindow):
             event.ignore()
 
     def about_app(self):
+        """
+            Gives basic information about the application.
+        """
         self.inf = About(self)
         self.inf.show()
 
     def style_sheet1(self):
+        """
+            Sets the first possible style sheet.
+        """
         with open(os.path.normpath("styles/style_sheet1.txt"), "r") as style:
             self.setStyleSheet(style.read())
         self.palette.setBrush(QtGui.QPalette.Background,
@@ -120,6 +152,9 @@ class Interface(QtGui.QMainWindow):
         self.setPalette(self.palette)
 
     def style_sheet2(self):
+        """
+            Sets the second possible style sheet.
+        """
         with open(os.path.normpath("styles/style_sheet2.txt"), "r") as style:
             self.setStyleSheet(style.read())
         self.palette.setBrush(QtGui.QPalette.Background,
@@ -127,6 +162,9 @@ class Interface(QtGui.QMainWindow):
         self.setPalette(self.palette)
 
     def change_style(self):
+        """
+            Changes the style-two possibilities.
+        """
         if self.style is True:
             self.style_sheet1()
             self.style = False

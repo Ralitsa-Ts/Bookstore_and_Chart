@@ -117,15 +117,6 @@ class Book:
         """
         return self._number_of_copies
 
-    def is_available(self):
-        """
-            Check if the book is available.
-            The function returns a boolean value.
-        """
-        if self._number_of_copies == 0:
-            return False
-        return True
-
     def decrease_number_of_copies(self, taken_copies):
         """
             Decrease the number of the available copies with a certain number.

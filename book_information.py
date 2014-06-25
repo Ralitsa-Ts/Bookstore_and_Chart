@@ -1,6 +1,7 @@
 import sys
 import os
 sys.path.append("model")
+
 from library import Library, Book
 from PyQt4 import QtGui, QtCore
 from functools import partial
@@ -12,9 +13,45 @@ class BookInformation(QtGui.QWidget):
         self.InitUI()
 
     def InitUI(self):
+        self.table = QtGui.QTableWidget()
+        self.prepare_the_search()
+        self.prepare_the_folder_image()
+        self.fill_in_grid()
+
+    def fill_in_grid(self):
+        """
+            Fill the gridLayout with all the widgets.
+        """
+        self.grid = QtGui.QGridLayout()
+        self.grid.addLayout(self.search, 0, 0)
+        self.grid.addWidget(self.folder_image, 2, 0)
+        self.grid.setSpacing(10)
+        self.grid.setColumnStretch(0, 6)
+        self.grid.setRowStretch(1, 1)
+        self.grid.setRowStretch(2, 2)
+
+        vBoxlayout = QtGui.QVBoxLayout()
+        vBoxlayout.addLayout(self.grid)
+        self.setLayout(vBoxlayout)
+
+    def prepare_the_folder_image(self):
+        """
+            Prepares the folder image so that it can be later added.
+        """
+        self.folder_image = QtGui.QLabel()
+        self.folder_image.setPixmap(QtGui.QPixmap(
+                                    os.path.normpath("images/folder.jpg")))
+        self.folder_image.setFixedWidth(200)
+        self.folder_image.setFixedHeight(200)
+
+    def prepare_the_search(self):
+        """
+            Prepares the search form.
+        """
         self.searchEdit = QtGui.QLineEdit()
         self.searchEdit.setPlaceholderText("click to search")
-        Search = QtGui.QPushButton("Search")
+        self.Search = QtGui.QPushButton("Search")
+        self.Search.clicked.connect(self.update_table)
 
         self.author = QtGui.QRadioButton("by author")
         self.title = QtGui.QRadioButton("by title")
@@ -26,33 +63,18 @@ class BookInformation(QtGui.QWidget):
         box.addWidget(self.title)
         box.addWidget(self.both)
 
-        manage = QtGui.QGridLayout()
-        manage.addWidget(self.searchEdit, 0, 0)
-        manage.addWidget(Search, 0, 2)
-        manage.addLayout(box, 1, 2)
-        manage.setColumnStretch(0, 3)
-        manage.setColumnStretch(3, 1)
-
-        image = QtGui.QLabel()
-        image.setPixmap(QtGui.QPixmap(os.path.normpath("images/folder.jpg")))
-        image.setFixedWidth(200)
-        image.setFixedHeight(200)
-
-        self.grid = QtGui.QGridLayout()
-        self.grid.addLayout(manage, 0, 0)
-        self.grid.addWidget(image, 2, 0)
-        self.grid.setSpacing(10)
-        self.grid.setColumnStretch(0, 6)
-        self.grid.setRowStretch(1, 1)
-        self.grid.setRowStretch(2, 2)
-        self.table = QtGui.QTableWidget(0, 0)
-        Search.clicked.connect(self.update_table)
-
-        vBoxlayout = QtGui.QVBoxLayout()
-        vBoxlayout.addLayout(self.grid)
-        self.setLayout(vBoxlayout)
+        self.search = QtGui.QGridLayout()
+        self.search.addWidget(self.searchEdit, 0, 0)
+        self.search.addWidget(self.Search, 0, 2)
+        self.search.addLayout(box, 1, 2)
+        self.search.setColumnStretch(0, 3)
+        self.search.setColumnStretch(3, 1)
 
     def generate_book_by_row(self, row):
+        """
+            Creates a book, which is in a certain row using the
+            information from the table cells.
+        """
         record = ""
         for i in range(6):
             data = self.table.item(row, i).text()
@@ -60,29 +82,44 @@ class BookInformation(QtGui.QWidget):
         return Book.book_by_record(record[1:])
 
     def get_a_copy(self, row):
+        """
+            Take a copy of a certain book.
+        """
         if int(self.table.item(row, 5).text()) > 0:
             book = Library.take_book(self.generate_book_by_row(row))
             item = QtGui.QTableWidgetItem(str(book.number_of_copies))
             self.table.setItem(row, 5, item)
 
     def return_a_copy(self, row):
+        """
+            Return a copy of a certain book.
+        """
         book = Library.return_book(self.generate_book_by_row(row))
         item = QtGui.QTableWidgetItem(str(book.number_of_copies))
         self.table.setItem(row, 5, item)
 
     def like_a_book(self, row):
+        """
+            Like a book-increases it's rating.
+        """
         book = Library.like_book(self.generate_book_by_row(row))
         value = "%.2f" % book.rating
         item = QtGui.QTableWidgetItem(str(value))
         self.table.setItem(row, 4, item)
 
     def dislike_a_book(self, row):
+        """
+            Dislike a book-decreases it's rating.
+        """
         book = Library.dislike_book(self.generate_book_by_row(row))
         value = "%.2f" % book.rating
         item = QtGui.QTableWidgetItem(str(value))
         self.table.setItem(row, 4, item)
 
     def update_table(self):
+        """
+            Update the table after clicking the Search button.
+        """
         self.table.setRowCount(0)
         self.table.setColumnCount(0)
         search = self.searchEdit.text()
