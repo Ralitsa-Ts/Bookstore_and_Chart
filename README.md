@@ -26,6 +26,8 @@ Bookstore and Chart
 До края на втория milestone приложението няма да има потребителски интерфейс.
 
 ---------------------------------------------------------------------------------
+English version:
+
 The project will be a desktop application which will mainly store information about various books and will 
 also produce a chart.
 
@@ -37,7 +39,7 @@ The user will have the chance to add a new book and to insert the following data
     <li>Rating</li>
     <li>Genre</li>
     <li>Number of copies</li>
-<ul>
+</ul>
 As a result some of the information will be processed and some information will be maintained about the 
 number of books and the number of books in a certain genre.
 
