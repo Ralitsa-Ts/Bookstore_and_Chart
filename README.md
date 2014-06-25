@@ -27,6 +27,7 @@ Bookstore and Chart
 
 ---------------------------------------------------------------------------------
 English version:
+--------------- 
 
 The project will be a desktop application which will mainly store information about various books and will 
 also produce a chart.
@@ -47,7 +48,7 @@ In addition, it will also be possible to generate a chart illustrating the numbe
 That way the user will be more aware of the number of books in the different genres and will know what 
 type of books to add.
 It will be possible to add or remove a book or to gain access to the information about certain books.
-------------------------------------------------------------------------------------
+
 The application might be useful in a library.
 
 
