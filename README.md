@@ -24,3 +24,28 @@ Bookstore and Chart
 за съдържащите се книги,които са добавени в системата-тоест какъв е общия им брой и броят на тези от съответен
 жанр.Евентуално ще може и да се премахва книга/и да се получава информация за книга/ по дадено заглавие.
 До края на втория milestone приложението няма да има потребителски интерфейс.
+
+---------------------------------------------------------------------------------
+The project will be a desktop application which will mainly store information about various books and will 
+also produce a chart.
+
+The user will have the chance to add a new book and to insert the following data about a certain book:
+<ul>
+    <li>Year of publcation</li>
+    <li>Author</li>
+    <li>Title</li>
+    <li>Rating</li>
+    <li>Genre</li>
+    <li>Number of copies</li>
+<ul>
+As a result some of the information will be processed and some information will be maintained about the 
+number of books and the number of books in a certain genre.
+
+In addition, it will also be possible to generate a chart illustrating the number of books in each genre.
+That way the user will be more aware of the number of books in the different genres and will know what type of 
+books to add.It will be possible to add/remove a book or to gain access to the information about certain books.
+------------------------------------------------------------------------------------
+The application might be useful in a library.
+
+
+
